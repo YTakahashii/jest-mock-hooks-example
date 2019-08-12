@@ -1,9 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render, cleanup } from '@testing-library/react';
 import App from './App';
+import { useRandom } from './useRandom';
+jest.mock('./useRandom');
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+const useRandomMock = useRandom as jest.MockedFunction<typeof useRandom>;
+
+afterEach(cleanup);
+
+it('value===7のとき "Lucky 7" と表示される', () => {
+  useRandomMock.mockReturnValue([7, () => {}]);
+  const { getByTestId } = render(<App />);
+
+  const value = getByTestId('value');
+  expect(value.textContent).toEqual('Lucky 7');
 });

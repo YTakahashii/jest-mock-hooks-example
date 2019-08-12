@@ -1,26 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useRandom } from './useRandom';
 
 const App: React.FC = () => {
+  const [value, setNewRandom] = useRandom();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <button onClick={() => setNewRandom(0, 100)}>New</button>
+      <p data-testid='value'>{value === 7 ? `Lucky ${value}` : value}</p>
     </div>
   );
-}
+};
 
 export default App;
